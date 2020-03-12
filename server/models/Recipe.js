@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 
 const RecipeSchema = mongoose.Schema({
-  id: Object,
   title: String,
   image: String,
   ingredients: Array,
