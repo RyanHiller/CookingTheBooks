@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "cd client/cooking_the_books && npm install && npm run build && cd ../.. && node server",
+    "start": "cd client/cooking_the_books && npm install && npm run build && cd ../.. && npm install && node server",
     "dev": "node server"
   },
   "author": "Ryan Hiller <allamericanslacker@gmail.com>",
