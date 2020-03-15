@@ -4,13 +4,13 @@ const express = require('express');
 const bodyParser = require('body-parser');
 
 const app = express();
-app.use(express.static('./client/cooking_the_books/build/'));
+app.use(express.static('./client/build/'));
 
 // Mount routes
 app.use('/api/recipes/', require('./server/routes/recipes-route'));
 
 app.get('/', (req, res) => {
-  res.sendFile('index.html', { root: __dirname + '/client/cooking_the_books/build/'});
+  res.sendFile('index.html', { root: __dirname + '/client/build/'});
 });
 
 const { PORT } = process.env;

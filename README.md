@@ -9,7 +9,7 @@ Cooking The Books is a web application developed with the MERN stack with the pu
 
 ## Install
 
-This project uses [Node.js](http://nodejs.org), [npm](https://npmjs.com), [MongoDB](https://www.mongodb.com/), [React](https://reactjs.org/), and is configured to deploy to [Azure](https://azure.microsoft.com/en-us/). After cloning the repository, run ```npm install``` in both the `root` directory, as well as the `client/cooking_the_books/` directory to ensure all dependencies are installed.
+This project uses [Node.js](http://nodejs.org), [npm](https://npmjs.com), [MongoDB](https://www.mongodb.com/), [React](https://reactjs.org/), and is configured to deploy to [Azure](https://azure.microsoft.com/en-us/). After cloning the repository, run ```npm install``` in both the `root` directory, as well as the `/client` directory to ensure all dependencies are installed.
 
 After installation, create an environment variable `DB_CONN` containing the MongoDB connection link. For more information on doing this, check [this](https://create-react-app.dev/docs/adding-custom-environment-variables/) link. This is currently set to work with MongoDB Atlas, however the Mongoose connection in the `/server/db-conn.js` file can be configured for other platforms. This project assumes a collection `recipes` exists already in the database, but this can be configured in the Mongoose Recipe model definition.
 
@@ -17,7 +17,7 @@ After installation, create an environment variable `DB_CONN` containing the Mong
 
 After dependency installation and database connection configuration is complete, simply running `node server.js` to run the Express server. This will launch at `localhost:3001` and will output confirmation on server startup and successful database connection.
 
-The `/client/cooking_the_books` directory contains the front end React application. Run `npm start` from this location to start the create-react-app development environment.
+The `/client` directory contains the front end React application. Run `npm start` from this location to start the create-react-app development environment.
 
 ## Contributing
 
