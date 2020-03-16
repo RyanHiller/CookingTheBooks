@@ -4,6 +4,7 @@ import axios from 'axios';
 
 // Pages
 import HomePage from './containers/HomePage/HomePage';
+import RecipePage from './containers/RecipePage/RecipePage';
 import TestPage from './containers/TestPage/TestPage';
 
 class App extends React.Component {
@@ -28,6 +29,7 @@ class App extends React.Component {
       <div className="App">
         <Router>
           <Route path="/" exact component={HomePage} />
+          <Route path="/recipe/:id" component={RecipePage} />
           <Route path="/test" exact component={TestPage} />
         </Router>
       </div>
