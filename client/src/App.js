@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import axios from 'axios';
 
 // Pages
+import HomePage from './containers/HomePage/HomePage';
 import TestPage from './containers/TestPage/TestPage';
 
 class App extends React.Component {
@@ -21,12 +22,13 @@ class App extends React.Component {
   }
 
   render() {
-    const { recipes } = this.state;
+    //const { recipes } = this.state;
 
     return (
       <div className="App">
         <Router>
-          <Route path="/" exact component={TestPage} />
+          <Route path="/" exact component={HomePage} />
+          <Route path="/test" exact component={TestPage} />
         </Router>
       </div>
     );
