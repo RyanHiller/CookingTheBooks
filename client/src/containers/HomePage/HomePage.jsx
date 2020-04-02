@@ -3,7 +3,7 @@ import React from 'react';
 import SearchBar from '../../components/SearchBar/SearchBar';
 import styles from './HomePage.module.css';
 
-const HomePage = () => {
+const HomePage = props => {
   return (
     <div className={styles.HomePage}>
       <div className={styles.Content}>
@@ -12,7 +12,7 @@ const HomePage = () => {
           Cooking The Books was designed with the purpose of providing people with a quick, reliable source of recipes
           based on the ingredients that they have available. No saving and updating your inventory. No nonsense.
         </div>
-        <SearchBar />
+        <SearchBar recipes={props.recipes}/>
       </div>
     </div>
   );

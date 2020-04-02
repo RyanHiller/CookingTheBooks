@@ -23,13 +23,13 @@ class App extends React.Component {
   }
 
   render() {
-    //const { recipes } = this.state;
+    const { recipes } = this.state;
 
     return (
       <div className="App">
         <Router>
-          <Route path="/" exact component={HomePage} />
-          <Route path="/recipe/:id" component={RecipePage} />
+          <Route path="/" exact render={() => <HomePage recipes={recipes} />} />
+          <Route path={`/recipes`} render={() => <RecipePage recipes={recipes} />} />
           <Route path="/test" exact component={TestPage} />
         </Router>
       </div>
