@@ -3,9 +3,7 @@ import { Link } from 'react-router-dom';
 
 import styles from './SearchBar.module.css';
 
-const recipes = require('../../test/testR.json');
-
-const SearchBar = () => {
+const SearchBar = props => {
   const [searchTerm, setSearchTerm] = React.useState('');
   const [searchResults, setSearchResults] = React.useState([]);
 
@@ -13,19 +11,19 @@ const SearchBar = () => {
     setSearchTerm(event.target.value);
   };
 
-  const getSuggestions = input => {
-    const inputValue = input.trim().toLowerCase();
-    const inputLength = inputValue.length;
-
-    return inputLength === 0 ? [] : recipes.filter(recipe => 
-        (recipe.tags.includes(inputValue)) || (recipe.title.toLowerCase().slice(0, inputLength) === inputValue)
-      );
-  }
-
   React.useEffect(() => {
     const results = getSuggestions(searchTerm);
     setSearchResults(results);
   }, [searchTerm]);
+
+  const getSuggestions = input => {
+    const inputValue = input.trim().toLowerCase();
+    const inputLength = inputValue.length;
+
+    return inputLength === 0
+      ? []
+      : props.recipes.filter(recipe => recipe.tags.includes(inputValue) || recipe.title.toLowerCase().slice(0, inputLength) === inputValue);
+  };
 
   return (
     <div className={styles.Search}>
@@ -35,8 +33,8 @@ const SearchBar = () => {
       </div>
       <ul className={styles.SearchSuggestions}>
         {searchResults.map(item => (
-          <li className={styles.SearchSuggestion} key={item._id.$oid}>
-            <Link to={{ pathname: `/recipe/`, query: item._id.$oid, recipeProps: { recipe: item } }}>{item.title}</Link>
+          <li className={styles.SearchSuggestion} key={item._id}>
+            <Link to={`/recipes?id=${item._id}`}>{item.title}</Link>
           </li>
         ))}
       </ul>
