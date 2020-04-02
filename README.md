@@ -5,7 +5,7 @@
 [![standard-readme compliant](https://img.shields.io/badge/readme%20style-standard-brightgreen.svg?style=flat-square)](https://github.com/RichardLitt/standard-readme)
 
 
-Cooking The Books is a web application developed with the MERN stack with the purpose of providing people with a quick, reliable, source of recipes based on the ingredients that they have available. No saving and updating your inventory. No nonsense.
+Cooking The Books is a web application developed with the MERN stack with the purpose of providing people with a quick, reliable source of recipes based on the ingredients that they have available. No saving and updating your inventory. No nonsense.
 
 ## Install
 
