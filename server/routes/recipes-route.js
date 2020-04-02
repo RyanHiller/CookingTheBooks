@@ -25,7 +25,10 @@ router.post('/seed', (req, res, next) => {
         { Name: 'shrimp, cooked', Amount: '1 lb' },
         { Name: 'Rice, cooked', Amount: '2 cups' },
       ],
-      steps: [{ Step: 'Mix rice with shrimp', Number: '1', Step: 'Eat the food', Number: '2' }],
+      steps: [
+        { Step: 'Mix rice with shrimp', Number: '1' },
+        { Step: 'Eat the food', Number: '2' },
+      ],
       author: 'John Smith',
       prepTime: '5 minutes',
       cookingTime: '30 minutes',

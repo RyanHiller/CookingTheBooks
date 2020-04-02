@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "dev-build": "cd client && npm install && npm run build && cd .. && node server"
   },
   "author": "Ryan Hiller <allamericanslacker@gmail.com>",
   "license": "MIT",
