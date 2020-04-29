@@ -12,26 +12,27 @@ const SearchBar = (props) => {
     };
 
     React.useEffect(() => {
+        const getSuggestions = (input) => {
+            const inputValue = input.trim().toLowerCase();
+            const inputLength = inputValue.length;
+            let filteredArr = [];
+
+            if (inputLength < 3) {
+                return [];
+            } else {
+                filteredArr = props.recipes.filter((recipe) =>
+                    recipe.title.toLowerCase().includes(inputValue)
+                );
+                /* TODO: Add ingredient search */
+            }
+
+            if (filteredArr.length > 7) filteredArr = filteredArr.slice(0, 7);
+            return filteredArr;
+        };
+
         const results = getSuggestions(searchTerm);
         setSearchResults(results);
-    }, [searchTerm]);
-
-    const getSuggestions = (input) => {
-        const inputValue = input.trim().toLowerCase();
-        const inputLength = inputValue.length;
-        let filteredArr = [];
-
-        if (inputLength < 3) {
-          return [];
-        } else {
-          filteredArr = props.recipes.filter(recipe => recipe.title.toLowerCase().includes(inputValue));
-          /* TODO: Add ingredient search */
-        }
-
-
-        if (filteredArr.length > 7) filteredArr = filteredArr.slice(0, 7);
-        return filteredArr;
-    };
+    }, [searchTerm, props.recipes]);
 
     return (
         <div className={styles.Search}>
