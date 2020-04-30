@@ -34,13 +34,19 @@ router.get('/bySearch', (req, res, next) => {
     {
       $searchBeta: {
         search: {
-          query: req.query.input.toString(),
+          query: req.query.input,
           path: ['title', 'ingredients'],
         },
       },
     },
     { $limit: 500 },
-  ]) : null;
+  ], (err, recipes) => {
+    if (err) {
+      console.log(err);
+      next(err);
+    }
+    else res.json(recipes);
+  }) : null;
 });
 
 /**
