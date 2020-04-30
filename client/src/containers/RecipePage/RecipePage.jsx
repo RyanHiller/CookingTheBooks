@@ -8,44 +8,89 @@ const useQuery = () => {
   return new URLSearchParams(useLocation().search);
 };
 
-const findRecipe = (id, recipes) => {
-  return recipes.find(recipe => {
-    return recipe._id === id;
-  });
-};
-
-const RecipePage = props => {
-  const [recipes, setRecipes] = React.useState([]);
-  const [recipe, setRecipe] = React.useState({});
+const RecipePage = (props) => {
   const id = useQuery().get('id');
+  const [recipe, setRecipe] = React.useState({});
 
   React.useEffect(() => {
-    setRecipes(props.recipes);
-    if (recipes.length === 0) {
-      axios
-        .get('/api/recipes')
-        .then(res => {
-          setRecipes(res.data);
-        })
-        .catch(alert);
+    if (!recipe.title) {
+      if (props.recipe === null) {
+        axios
+          .get('/api/recipes/byId', { params: { id: id } })
+          .then((res) => {
+            setRecipe(res.data);
+          })
+          .catch(alert);
+      } else {
+        setRecipe(props.recipe);
+      }
     }
+  }, [props.recipe, recipe.title, id]);
 
-    setRecipe(findRecipe(id, recipes));
-  });
-
-  console.log(recipe);
-
-  return recipe ? (
-    <div className={styles.RecipePage}>
-      <div className={styles.RecipeHeader}>
-        <div className={styles.Title}>{recipe.title}</div>
-        <img className={styles.Image} />
+  let footnotes =
+    recipe.footnotes && recipe.footnotes.length > 0 ? (
+      <div className={styles.FootnotesContainer}>
+        <b>Author Notes:</b> <br />
+        <ul className={styles.Footnotes}>
+          {recipe.footnotes.map((item) => (
+            <li className={styles.Footnotes} key={recipe._id + 'FOOT' + item.toString()}>
+              {item}
+            </li>
+          ))}
+        </ul>
       </div>
-      {/* <ul className={styles.Ingredients}>{recipe.ingredients.map(item => {})}</ul> */}
+    ) : (
+      <div className={styles.FootnotesContainer}></div>
+    );
+
+  let ingredients = recipe.ingredients ? (
+    <div className={styles.IngredientsContainer}>
+      <b>Ingredients:</b>
+      <ul className={styles.Ingredients}>
+        {recipe.ingredients.map((item) => (
+          <li className={styles.Ingredient} key={recipe._id + 'INGR' + item.toString()}>
+            {item}
+          </li>
+        ))}
+      </ul>
     </div>
   ) : (
-    <div>Loading...</div>
+    <div className={styles.IngredientsContainer}>Loading...</div>
   );
+
+  let imageURL = recipe.photo_url === '' ? '../../assets/img/logo_4x.png' : recipe.photo_url;
+
+  let instructions = recipe.instructions ? (
+    <div className={styles.InstructionsContainer}>
+      <b>Instructions: </b>
+      <ol className={styles.Instructions}>
+        {recipe.instructions
+          ? recipe.instructions.map((item) => (
+              <li className={styles.Instruction} key={recipe._id + 'INSTR' + item.toString()}>
+                {item}
+              </li>
+            ))
+          : null}
+      </ol>
+    </div>
+  ) : (
+    <div className={styles.InstructionsContainer}></div>
+  );
+
+  const recipePage = (
+    <div className={styles.RecipePage}>
+      <div className={styles.Content}>
+        <div className={styles.Title}>{recipe.title}</div>
+        <div className={styles.Details}>
+          {ingredients}
+          <img className={styles.Image} alt={recipe.title} src={imageURL} />
+          {footnotes}
+        </div>
+        {instructions}
+      </div>
+    </div>
+  );
+  return recipePage;
 };
 
 export default RecipePage;

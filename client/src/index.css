@@ -1,6 +1,19 @@
 body {
-  font-family: 'Quicksand', sans-serif;
+  background-image: url('./assets/img/mainBackground.jpeg');
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  background-position: center;
+  font-family: "Quicksand", sans-serif;
   font-size: 16px;
+  min-height: 100vh;
   margin: 0;
+  overflow-x: hidden;
+  padding: 0;
+  width: 100vw;
+}
+
+ul,
+ol {
   padding: 0;
 }

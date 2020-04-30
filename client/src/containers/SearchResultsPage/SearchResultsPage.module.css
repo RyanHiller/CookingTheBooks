@@ -1,4 +1,4 @@
-.HomePage {
+.PageContainer {
   align-items: center;
   display: flex;
   justify-content: center;
@@ -9,21 +9,20 @@
 .Content {
   background-color: rgba(255, 255, 255, 0.85);
   border-radius: 1rem;
-  margin: 2rem;
+  display: grid;
+  grid-template-columns: 100%;
+  grid-template-rows: auto auto auto;
+  margin: 2rem 0;
   padding: 2rem;
   text-align: center;
-  width: 40%;
+  width: 50%;
 }
 
-.Content > * {
-  margin: 2rem 0;
+.Content > * > * {
+  padding: 0;
 }
 
-.Logo {
-  width: 100%;
-  margin: 0;
-}
-
-.Description {
-  font-size: 1.5rem;
+.Title {
+  font-size: 2rem;
+  grid-row: 1;
 }
