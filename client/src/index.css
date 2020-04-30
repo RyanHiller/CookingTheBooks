@@ -1,11 +1,12 @@
 body {
-  font-family: 'Quicksand', sans-serif;
+  font-family: "Quicksand", sans-serif;
   font-size: 16px;
   margin: 0;
   overflow-x: hidden;
   padding: 0;
 }
 
-ul, ol {
+ul,
+ol {
   padding: 0;
 }

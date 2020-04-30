@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
-import axios from 'axios';
+//import axios from 'axios';
 
 // Pages
 import HomePage from './containers/HomePage/HomePage';
@@ -16,21 +16,18 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    axios
-      .get('/api/recipes')
-      .then(res => this.setState({ recipes: res.data }))
-      .catch(alert);
+    //axios.get('/api/recipes').then(res => this.setState({ recipes: res.data })).catch(alert);
   }
 
   render() {
     const { recipes } = this.state;
 
     return (
-      <div className="App">
+      <div className='App'>
         <Router>
-          <Route path="/" exact render={() => <HomePage recipes={recipes} />} />
+          <Route path='/' exact render={() => <HomePage recipes={recipes} />} />
           <Route path={`/recipes`} render={() => <RecipePage recipes={recipes} />} />
-          <Route path="/test" exact component={TestPage} />
+          <Route path='/test' exact component={TestPage} />
         </Router>
       </div>
     );
