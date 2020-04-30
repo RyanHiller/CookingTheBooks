@@ -8,76 +8,89 @@ const useQuery = () => {
   return new URLSearchParams(useLocation().search);
 };
 
-const findRecipe = (id, recipes) => {
-  return recipes.find((recipe) => {
-    return recipe._id === id;
-  });
-};
-
 const RecipePage = (props) => {
-  const [recipes, setRecipes] = React.useState([]);
-  const [recipe, setRecipe] = React.useState({});
   const id = useQuery().get('id');
+  const [recipe, setRecipe] = React.useState({});
 
   React.useEffect(() => {
-    setRecipes(props.recipes);
-    if (recipes.length === 0) {
-      axios
-        .get('/api/recipes')
-        .then((res) => {
-          setRecipes(res.data);
-        })
-        .catch(alert);
+    if (!recipe.title) {
+      if (props.recipe === null) {
+        axios
+          .get('/api/recipes/byId', { params: { id: id } })
+          .then((res) => {
+            setRecipe(res.data);
+          })
+          .catch(alert);
+      } else {
+        setRecipe(props.recipe);
+      }
     }
+  }, [props.recipe, recipe.title, id]);
 
-    setRecipe(findRecipe(id, recipes));
-  }, [props.recipes, recipes, id]);
+  let footnotes =
+    recipe.footnotes && recipe.footnotes.length > 0 ? (
+      <div className={styles.FootnotesContainer}>
+        <b>Author Notes:</b> <br />
+        <ul className={styles.Footnotes}>
+          {recipe.footnotes.map((item) => (
+            <li className={styles.Footnotes} key={recipe._id + 'FOOT' + item.toString()}>
+              {item}
+            </li>
+          ))}
+        </ul>
+      </div>
+    ) : (
+      <div className={styles.FootnotesContainer}></div>
+    );
 
-  console.log(recipe);
+  let ingredients = recipe.ingredients ? (
+    <div className={styles.IngredientsContainer}>
+      <b>Ingredients:</b>
+      <ul className={styles.Ingredients}>
+        {recipe.ingredients.map((item) => (
+          <li className={styles.Ingredient} key={recipe._id + 'INGR' + item.toString()}>
+            {item}
+          </li>
+        ))}
+      </ul>
+    </div>
+  ) : (
+    <div className={styles.IngredientsContainer}>Loading...</div>
+  );
 
-  return recipe ? (
+  let imageURL = recipe.photo_url === '' ? '../../assets/img/logo_4x.png' : recipe.photo_url;
+
+  let instructions = recipe.instructions ? (
+    <div className={styles.InstructionsContainer}>
+      <b>Instructions: </b>
+      <ol className={styles.Instructions}>
+        {recipe.instructions
+          ? recipe.instructions.map((item) => (
+              <li className={styles.Instruction} key={recipe._id + 'INSTR' + item.toString()}>
+                {item}
+              </li>
+            ))
+          : null}
+      </ol>
+    </div>
+  ) : (
+    <div className={styles.InstructionsContainer}></div>
+  );
+
+  const recipePage = (
     <div className={styles.RecipePage}>
       <div className={styles.Content}>
         <div className={styles.Title}>{recipe.title}</div>
         <div className={styles.Details}>
-          <ul className={styles.Ingredients}>
-            {recipe.ingredients
-              ? recipe.ingredients.map((item) => (
-                  <li className={styles.Ingredient} key={recipe._id + 'INGR' + item.toString()}>
-                    {item}
-                  </li>
-                ))
-              : null}
-          </ul>
-          <img className={styles.Image} src={recipe.photo_url} alt={recipe.title} />
-          <ul className={styles.Footnotes}>
-            <b>Author Notes:</b> <br />
-            {recipe.footnotes
-              ? recipe.footnotes.map((item) => (
-                  <li className={styles.Footnotes} key={recipe._id + 'FOOT' + item.toString()}>
-                    {item}
-                  </li>
-                ))
-              : null}
-          </ul>
+          {ingredients}
+          <img className={styles.Image} alt={recipe.title} src={imageURL} />
+          {footnotes}
         </div>
-        <div className={styles.InstructionsContainer}>
-          <b>Instructions: </b>
-          <ol className={styles.Instructions}>
-            {recipe.instructions
-              ? recipe.instructions.map((item) => (
-                  <li className={styles.Instruction} key={recipe._id + 'INSTR' + item.toString()}>
-                    {item}
-                  </li>
-                ))
-              : null}
-          </ol>
-        </div>
+        {instructions}
       </div>
     </div>
-  ) : (
-    <div>Loading...</div>
   );
+  return recipePage;
 };
 
 export default RecipePage;
