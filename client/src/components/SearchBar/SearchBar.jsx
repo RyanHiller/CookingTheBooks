@@ -1,58 +1,50 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 import styles from './SearchBar.module.css';
 
 const SearchBar = (props) => {
   const [searchTerm, setSearchTerm] = React.useState('');
-  const [searchResults, setSearchResults] = React.useState([]);
+  const history = useHistory();
 
   const handleChange = (event) => {
     setSearchTerm(event.target.value);
   };
 
-  React.useEffect(() => {
-    const getSuggestions = (input) => {
-      const inputValue = input.trim().toLowerCase();
-      const inputLength = inputValue.length;
-      let filteredArr = [];
+  const canSubmit = () => {
+    return searchTerm.trim().length > 0;
+  };
 
-      if (inputLength < 3) {
-        return [];
-      } else {
-        filteredArr = props.recipes.filter((recipe) =>
-          recipe.title.toLowerCase().includes(inputValue)
-        );
-        /* TODO: Add ingredient search */
-      }
+  const handleSubmit = (event) => {
+    if (!canSubmit()) {
+      event.preventDefault();
+      return;
+    } else {
+      event.preventDefault();
+      const inputValue = searchTerm.trim();
+      history.push(`/search?q=${inputValue}`);
+    }
+  };
 
-      if (filteredArr.length > 7) filteredArr = filteredArr.slice(0, 7);
-      return filteredArr;
-    };
-
-    const results = getSuggestions(searchTerm);
-    setSearchResults(results);
-  }, [searchTerm, props.recipes]);
+  const isEnabled = canSubmit();
 
   return (
     <div className={styles.Search}>
-      <div className={styles.SearchBar}>
+      <form className={styles.SearchBar} onSubmit={handleSubmit}>
         <input
           className={styles.SearchInput}
+          name='searchBar'
           type='text'
           placeholder='Search by recipe or ingredient'
           value={searchTerm}
           onChange={handleChange}
+          minLength={3}
         />
-        <div className={styles.SearchButton}>Search</div>
-      </div>
-      <ul className={styles.SearchSuggestions}>
-        {searchResults.map((item) => (
-          <li className={styles.SearchSuggestion} key={item._id}>
-            <Link to={`/recipes?id=${item._id}`}>{item.title}</Link>
-          </li>
-        ))}
-      </ul>
+        <button className={styles.SearchButton} type='submit' disabled={!isEnabled}>
+          Search
+        </button>
+      </form>
+      {/* <ul className={styles.SearchSuggestions}></ul> */}
     </div>
   );
 };

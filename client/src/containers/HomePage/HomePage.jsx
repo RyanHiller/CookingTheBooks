@@ -17,7 +17,7 @@ const HomePage = (props) => {
           source of recipes based on the ingredients that they have available. No saving and
           updating your inventory. No nonsense.
         </div>
-        <SearchBar recipes={props.recipes} />
+        <SearchBar />
       </div>
     </div>
   );
