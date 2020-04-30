@@ -5,11 +5,42 @@ const Recipe = require('../models/Recipe');
  * URL: localhost:3001/api/recipes/
  * Response: Array of all Recipe documents
  */
-router.get('/', async (req, res, next) => {
-  await Recipe.find({}, (err, recipes) => {
+router.get('/', (req, res, next) => {
+  Recipe.find({}, (err, recipes) => {
     if (err) next(err);
     else res.json(recipes);
   }).lean();
+});
+
+/**
+ * URL: localhost:3001/api/recipes/byId
+ * Description: Returns a recipe as a JSON object
+ */
+router.get('/byId', (req, res, next) => {
+  Recipe.findById(req.query.id, (err, recipe) => {
+    if (err) next(err);
+    else res.json(recipe);
+  });
+});
+
+/**
+ * URL: localhost:3001/api/recipes/bySearch
+ * Description: Returns an array of recipes whose title or ingredients contain a query term
+ * Notes: Arbitrary max value of 500 query results
+ */
+router.get('/bySearch', (req, res, next) => {
+  req.query.input ?
+  Recipe.aggregate([
+    {
+      $searchBeta: {
+        search: {
+          query: req.query.input.toString(),
+          path: ['title', 'ingredients'],
+        },
+      },
+    },
+    { $limit: 500 },
+  ]) : null;
 });
 
 /**
@@ -34,7 +65,7 @@ router.post('/seed', (req, res, next) => {
       cookingTime: '30 minutes',
       tags: ['seafood', 'rice'],
     });
-    newRecipe.save(err => {
+    newRecipe.save((err) => {
       if (err) console.log(err);
       else console.log(`Test recipe ${i} saved!`);
     });
@@ -48,7 +79,7 @@ router.post('/seed', (req, res, next) => {
  * Description: Deletes all recipes from DB
  */
 router.delete('/', (req, res, next) => {
-  Recipe.deleteMany({}, err => {
+  Recipe.deleteMany({}, (err) => {
     if (err) next(err);
     else res.send('Successfully deleted all recipes');
   });
