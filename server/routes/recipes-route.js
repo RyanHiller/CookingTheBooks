@@ -5,11 +5,11 @@ const Recipe = require('../models/Recipe');
  * URL: localhost:3001/api/recipes/
  * Response: Array of all Recipe documents
  */
-router.get('/', (req, res, next) => {
-  Recipe.find({}, (err, recipes) => {
+router.get('/', async (req, res, next) => {
+  await Recipe.find({}, (err, recipes) => {
     if (err) next(err);
     else res.json(recipes);
-  });
+  }).lean();
 });
 
 /**
