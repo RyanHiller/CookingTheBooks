@@ -5,7 +5,6 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 // Pages
 import HomePage from './containers/HomePage/HomePage';
 import RecipePage from './containers/RecipePage/RecipePage';
-import TestPage from './containers/TestPage/TestPage';
 
 class App extends React.Component {
   constructor(props) {
@@ -26,8 +25,7 @@ class App extends React.Component {
       <div className='App'>
         <Router>
           <Route path='/' exact render={() => <HomePage recipes={recipes} />} />
-          <Route path={`/recipes`} render={() => <RecipePage recipes={recipes} />} />
-          <Route path='/test' exact component={TestPage} />
+          <Route path={`/recipes`} render={() => <RecipePage recipes={recipes} recipe={null} />} />
         </Router>
       </div>
     );
