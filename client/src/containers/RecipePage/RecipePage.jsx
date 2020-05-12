@@ -18,7 +18,8 @@ const RecipePage = (props) => {
         axios
           .get('/api/recipes/byId', { params: { id: id } })
           .then((res) => {
-            setRecipe(res.data);
+            if (res.data !== null) setRecipe(res.data)
+            else alert("Recipe not found");
           })
           .catch(alert);
       } else {
@@ -74,7 +75,7 @@ const RecipePage = (props) => {
       </ol>
     </div>
   ) : (
-    <div className={styles.InstructionsContainer}></div>
+    <div className={styles.InstructionsContainer}>Loading...</div>
   );
 
   const recipePage = (
@@ -90,6 +91,7 @@ const RecipePage = (props) => {
       </div>
     </div>
   );
+  
   return recipePage;
 };
 

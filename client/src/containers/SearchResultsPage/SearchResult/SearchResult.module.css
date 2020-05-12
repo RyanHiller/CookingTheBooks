@@ -1,0 +1,38 @@
+.Result {
+    background-color: rgba(0, 0, 0, 0.15);
+    border-radius: 10px;
+    color: black;
+    cursor: pointer;
+    display: grid;
+    grid-column-gap: 1rem;
+    grid-template-columns: 7rem auto auto;
+    grid-template-rows: auto;
+    height: 7rem;
+    margin-bottom: 1rem;
+}
+
+.Image {
+    align-self: center;
+    grid-column: 1;
+    justify-self: center;
+    max-height: 7rem;
+    max-width: 7rem;
+}
+
+.Title {
+    align-self: center;
+    text-align: left;
+    text-decoration: none;
+}
+
+.Time {
+    align-self: center;
+    grid-column: 3;
+    justify-self: end;
+    margin-right: 1rem;
+}
+
+.Time p {
+    margin: 0;
+    text-align: left;
+}
