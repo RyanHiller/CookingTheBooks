@@ -29,5 +29,24 @@
 }
 
 .Results {
-  margin: 0
+  margin: 0;
+}
+
+.NavArrows {
+  align-self: center;
+}
+
+.NavArrows > div {
+  cursor: pointer;
+  display: inline-block;
+  font-size: 3rem;
+  padding: 0 0.5rem;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+}
+
+.hide {
+  color: rgba(0, 0, 0, 0) !important;
+  cursor: default !important;
 }
