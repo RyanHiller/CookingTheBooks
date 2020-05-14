@@ -26,7 +26,7 @@ router.get('/byId', (req, res, next) => {
 /**
  * URL: localhost:3001/api/recipes/bySearch
  * Description: Returns an array of recipes whose title or ingredients contain a query term
- * Notes: Arbitrary max value of 500 query results
+ * Notes: Arbitrary max value of 200 query results
  */
 router.get('/bySearch', (req, res, next) => {
   req.query.input ?
@@ -39,7 +39,7 @@ router.get('/bySearch', (req, res, next) => {
         },
       },
     },
-    { $limit: 500 },
+    { $limit: 200 },
   ], (err, recipes) => {
     if (err) {
       console.log(err);

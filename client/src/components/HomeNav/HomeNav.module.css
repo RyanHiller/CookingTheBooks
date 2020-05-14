@@ -1,0 +1,6 @@
+.Logo {
+  align-self: center;
+  grid-row: 1;
+  margin-bottom: 3rem;
+  max-width: 50%;
+}
