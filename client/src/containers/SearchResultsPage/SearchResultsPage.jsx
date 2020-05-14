@@ -2,6 +2,7 @@ import React from "react";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
 
+import HomeNav from "../../components/HomeNav/HomeNav";
 import SearchResult from "./SearchResult/SearchResult";
 
 import styles from "./SearchResultsPage.module.css";
@@ -33,7 +34,7 @@ const SearchResultsPage = () => {
     } else {
       setMaxPage(Math.floor(recipes.length / 10));
     }
-  });
+  }, [recipes.length]);
 
   React.useEffect(() => {
     let temp =
@@ -72,6 +73,7 @@ const SearchResultsPage = () => {
   return (
     <div className={styles.PageContainer}>
       <div className={styles.Content}>
+        <HomeNav />
         <div className={styles.Title}>Search Results for "{query}"</div>
         <ul className={styles.Results}>{pageResults}</ul>
         {arrowNav}

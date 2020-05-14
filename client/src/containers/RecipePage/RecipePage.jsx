@@ -1,24 +1,26 @@
-import React from 'react';
-import { useLocation } from 'react-router-dom';
-import axios from 'axios';
+import React from "react";
+import { useLocation } from "react-router-dom";
+import axios from "axios";
 
-import styles from './RecipePage.module.css';
+import HomeNav from "../../components/HomeNav/HomeNav";
+
+import styles from "./RecipePage.module.css";
 
 const useQuery = () => {
   return new URLSearchParams(useLocation().search);
 };
 
 const RecipePage = (props) => {
-  const id = useQuery().get('id');
+  const id = useQuery().get("id");
   const [recipe, setRecipe] = React.useState({});
 
   React.useEffect(() => {
     if (!recipe.title) {
       if (props.recipe === null) {
         axios
-          .get('/api/recipes/byId', { params: { id: id } })
+          .get("/api/recipes/byId", { params: { id: id } })
           .then((res) => {
-            if (res.data !== null) setRecipe(res.data)
+            if (res.data !== null) setRecipe(res.data);
             else alert("Recipe not found");
           })
           .catch(alert);
@@ -34,7 +36,7 @@ const RecipePage = (props) => {
         <b>Author Notes:</b> <br />
         <ul className={styles.Footnotes}>
           {recipe.footnotes.map((item) => (
-            <li className={styles.Footnotes} key={recipe._id + 'FOOT' + item.toString()}>
+            <li className={styles.Footnotes} key={recipe._id + "FOOT" + item.toString()}>
               {item}
             </li>
           ))}
@@ -49,7 +51,7 @@ const RecipePage = (props) => {
       <b>Ingredients:</b>
       <ul className={styles.Ingredients}>
         {recipe.ingredients.map((item) => (
-          <li className={styles.Ingredient} key={recipe._id + 'INGR' + item.toString()}>
+          <li className={styles.Ingredient} key={recipe._id + "INGR" + item.toString()}>
             {item}
           </li>
         ))}
@@ -59,7 +61,7 @@ const RecipePage = (props) => {
     <div className={styles.IngredientsContainer}>Loading...</div>
   );
 
-  let imageURL = recipe.photo_url === '' ? '../../assets/img/logo_4x.png' : recipe.photo_url;
+  let imageURL = recipe.photo_url === "" ? "../../assets/img/logo_4x.png" : recipe.photo_url;
 
   let instructions = recipe.instructions ? (
     <div className={styles.InstructionsContainer}>
@@ -67,7 +69,7 @@ const RecipePage = (props) => {
       <ol className={styles.Instructions}>
         {recipe.instructions
           ? recipe.instructions.map((item) => (
-              <li className={styles.Instruction} key={recipe._id + 'INSTR' + item.toString()}>
+              <li className={styles.Instruction} key={recipe._id + "INSTR" + item.toString()}>
                 {item}
               </li>
             ))
@@ -81,6 +83,7 @@ const RecipePage = (props) => {
   const recipePage = (
     <div className={styles.RecipePage}>
       <div className={styles.Content}>
+        <HomeNav />
         <div className={styles.Title}>{recipe.title}</div>
         <div className={styles.Details}>
           {ingredients}
@@ -91,7 +94,7 @@ const RecipePage = (props) => {
       </div>
     </div>
   );
-  
+
   return recipePage;
 };
 
